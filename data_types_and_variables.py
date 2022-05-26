@@ -77,7 +77,7 @@ password = 'notastrongpassword'
 
 pass_len_valid = len(password) >= 5
 name_len_valid = len(username) <= 20
-name_pass_not_match = username.lower().strip() != password.lower().strip()
+name_pass_not_match = username.lower().strip() != password.lower().strip()  # https://pypi.org/project/jellyfish/0.5.4/ for a more robust solution
 name_not_whitespace = not username[0].isspace() and not username[-1].isspace()
 pass_not_whitespace = not password[0].isspace() and not password[-1].isspace()
 name_pass_valid = pass_len_valid and name_len_valid and name_pass_not_match and name_not_whitespace and pass_not_whitespace
