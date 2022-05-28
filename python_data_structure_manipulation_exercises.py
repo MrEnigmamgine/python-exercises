@@ -195,17 +195,20 @@ print(getAvgPetAge(students))
 
 # What is most frequent coffee preference for data science students?
 # coffee_preference
-def count_ds_coffee_preference(pref):
-    return len([s for s in students if (s['coffee_preference'].lower() == pref.lower()) and s['course'] == 'data science'])
+def count_course_coffee_preference(pref, course):
+    return len([s for s in students if (s['coffee_preference'].lower() == pref.lower()) and s['course'] == course])
 
 for pref in ['light','dark','medium']:
-    print(pref, count_ds_coffee_preference(pref))
+    print(pref, count_course_coffee_preference(pref, 'data science'))
 
 # light 0
 # dark 3
 # medium 4
 
 # What is the least frequent coffee preference for web development students?
+for pref in ['light','dark','medium']:
+    print(pref, count_course_coffee_preference(pref, 'web development'))
+
 # What is the average grade for students with at least 2 pets?
 # How many students have 3 pets?
 # What is the average grade for students with 0 pets?
