@@ -164,10 +164,47 @@ for s in students:
     print(f'{name}: {gradesAverage}')
 
 # How many pets does each student have?
+for s in students:
+    name = s['student']
+    petCount = len(s['pets'])
+    print(f'{name}: {petCount}')
+
 # How many students are in web development? data science?
+
+courseCount = {"web development" : 0, "data science": 0}
+for s in students:
+    course = s['course']
+    courseCount.update({course: courseCount[course] +1})
+print(courseCount)
+
 # What is the average number of pets for students in web development?
+petcount = [len(student['pets']) for student in students]
+print(sum(petcount)/len(petcount))
+# 1.285 pets on average
+
 # What is the average pet age for students in data science?
+def getAvgPetAge(d):
+    petAges = []
+    for s in students:
+        for p in s['pets']:
+            petAges.append(p['age'])
+    return sum(petAges) / len(petAges)
+
+print(getAvgPetAge(students))
+# 5.72
+
 # What is most frequent coffee preference for data science students?
+# coffee_preference
+def count_ds_coffee_preference(pref):
+    return len([s for s in students if (s['coffee_preference'].lower() == pref.lower()) and s['course'] == 'data science'])
+
+for pref in ['light','dark','medium']:
+    print(pref, count_ds_coffee_preference(pref))
+
+# light 0
+# dark 3
+# medium 4
+
 # What is the least frequent coffee preference for web development students?
 # What is the average grade for students with at least 2 pets?
 # How many students have 3 pets?
