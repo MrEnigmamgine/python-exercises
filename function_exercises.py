@@ -6,7 +6,7 @@
 ## Checks if a value can be evaluate as the integer 2.
 # @param {string OR int} x
 ##
-from curses.ascii import isdigit
+
 
 
 def is_two(x):
@@ -20,7 +20,7 @@ def is_two(x):
         # If an error is thrown, this will run instead.
         return False
 
-print(is_two(2), is_two('2'))
+# print(is_two(2), is_two('2'))
 
 # Define a function named is_vowel. It should return True if the passed string is a vowel, False otherwise.
 
@@ -56,7 +56,7 @@ assert is_vowel("iou") == False
 def is_consonant(s):
     # We aren't asking if something is in an array this time because of an arbitrary requirement,
     # so instead we will want to first make sure that we are receiving only a single character,
-    if len(s) != 1 or isdigit(s): return False        # and stopping the function if not.
+    if len(s) != 1 or s.isdigit(): return False        # and stopping the function if not.
     # While not completely accurate due to characters like [$,%,#,@], we can surmise that if something is
     # not a vowel, then it is probably a consonant.
     return not is_vowel(s)
@@ -70,6 +70,10 @@ assert is_consonant("Q") == True
 assert is_consonant("y") == True
 
 # Define a function that accepts a string that is a word. The function should capitalize the first letter of the word if the word starts with a consonant.
+
+## Checks if a string starts with a consonant and is not just a single character. If so capitalize it.
+# @param {string} word
+##
 def capitalize_word(word):
     if len(word) > 1 and is_consonant(word[0]):
         return word.lower().capitalize()
@@ -80,12 +84,22 @@ assert capitalize_word('banana') == 'Banana'
 
 
 # Define a function named calculate_tip. It should accept a tip percentage (a number between 0 and 1) and the bill total, and return the amount to tip.
+
+## Calculates the tip amount based on the percentage of the total bill.
+# @param {float} perc
+# @param {float} bill
+##
 def calculate_tip(perc, bill):
     return round((perc * bill), 2)
 
 print(calculate_tip(.15, 23.88))
 
 # Define a function named apply_discount. It should accept a original price, and a discount percentage, and return the price after the discount is applied.
+
+## Calculates resulting price after applying a discount presented in a percentage.
+# @param {float} price
+# @param {float} perc
+##
 def apply_discout(price, perc):
     return round((price - (price * perc)), 2)
 
@@ -93,14 +107,20 @@ print(apply_discout(23.88, .10))
 
 
 # Define a function named handle_commas. It should accept a string that is a number that contains commas in it as input, and return a number as output.
+
+
 def handle_commas(str):
+    # The replace method can remove unwanted characters nicely.
+    # Also we want to return a number. I chose to use float over int because I didn't want to assume that a number would be a whole number.
     return float(str.replace(',' , ''))
 
 print(handle_commas('1,000,000.23'))
 
 # Define a function named get_letter_grade. It should accept a number and return the letter grade associated with that number (A-F).
+
+# Here we can leverage dictionaries and ranges to presnt the prerequisite data in an easy to understand format.
 def get_letter_grade(num):
-    gradeKey = {
+    gradeKey = { # Be aware that the range will not include the second number in the argument. But it does include the first.
                 'A+': range(100,200),
                 'A' : range(89 ,100),
                 'A-': range(88 , 89),
@@ -124,6 +144,8 @@ get_letter_grade(grade)
 
 # Define a function named remove_vowels that accepts a string and returns a string with all the vowels removed.
 def remove_vowels(str):
+    # Trying to remove something from an iterable while we are iterating through it is usually a bad idea.
+    # Instead we'll create a new string from scratch based on the original, but we'll ignore any vowels.
     output = ''
     for l in str:
         if not is_vowel(l):
@@ -142,8 +164,17 @@ remove_vowels('Define a function named remove_vowels that accepts a string and r
     # First Name will become first_name
     # % Completed will become completed
 
-def normalize_name(str):
-    return str.lower().replace('%','').strip().replace(' ', '_')
+# def normalize_name(str):
+#     # This problem is just string manipulation with extra steps.  We can break down the steps by calling the methods in sequence.
+#     return str.lower().replace('%','').strip().replace(' ', '_')
+
+def remove_special_char(string):
+    return ''.join([c for c in string if c.isalnum() or c == ' '])
+
+
+def normalize_name(string):
+    special_char_removed = remove_special_char(string)
+    return special_char_removed.lower().strip().replace(' ', '_')
 
 normalize_name('Name')
 normalize_name('First Name')
@@ -157,6 +188,8 @@ normalize_name('% Completed')
 def cumulative_sum(arr):
     output = []
     for n in arr:
+        # Without declaring a holder variable to track the sum we need to use a slightly different logic on the first loop.
+        # To do so requires an if statement, which means that this isn't the most effecient loop since there is an extra step that runs every loop.
         if len(output) > 0:
             output.append(n + output[-1])
         else: output.append(n)
